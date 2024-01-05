@@ -1,5 +1,5 @@
 """
-WSGI config for ocr_api project.
+WSGI config for Api_ScanToFill project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ocr_api.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Api_ScanToFill.settings')
 
 application = get_wsgi_application()
