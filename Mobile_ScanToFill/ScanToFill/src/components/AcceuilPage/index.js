@@ -243,3 +243,5 @@ const styles = StyleSheet.create({
 });
 
 export default AccueilPage;
+
+//message to add
