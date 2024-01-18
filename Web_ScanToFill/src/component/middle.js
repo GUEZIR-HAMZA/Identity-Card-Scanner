@@ -60,33 +60,9 @@ function Mid() {
   const [selectedName, setSelectedName] = useState('');
   const [apiResponse, setApiResponse] = useState(null);
   const [ocrData, setOcrData] = useState(null);
+  const [documentName, setDocumentName] = useState(null);
 
-  useEffect(() => {
-    const fetchApiResponse = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/api/upload/');
-        const data = await response.json();
-        setApiResponse(data);
 
-        if (data && data.defaultOption) {
-          setSelectedOption(data.defaultOption);
-          setLabels(optionLabels[data.defaultOption]);
-
-          if (data[data.defaultOption] && data[data.defaultOption].ocr) {
-            const ocrData = data[data.defaultOption].ocr;
-            const initialLabelData = labels.map((label) => ocrData[label] || '');
-            setLabelData(initialLabelData);
-          } else {
-            setLabelData(Array(labels.length).fill(''));
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching API response:', error);
-      }
-    };
-
-    fetchApiResponse();
-  }, [labels]);
 
   const handleOptionChange = (event) => {
     const selected = event.target.value;
@@ -126,36 +102,62 @@ function Mid() {
   };
   
 
-  const handleUpload = async () => {
-    if (selectedFile) {
-      const formData = new FormData();
-      formData.append('image', selectedFile);
-
-      try {
-        const response = await fetch('http://localhost:8000/api/upload/', {
-          method: 'POST',
-          body: formData,
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          console.log('Upload successful. Result:', result);
-
-          if (result.api_response.data.ocr) {
-            const ocrData = result.api_response.data.ocr;
-            setOcrData(ocrData);
-            console.log("OCR Data:", ocrData);
-          }
-        } else {
-          console.error('Error uploading the image. Status:', response.status);
-        }
-      } catch (error) {
-        console.error('Error uploading the image:', error);
+    // Function to map documentName to optionLabels key
+    const mapDocumentNameToLabelsKey = (documentName) => {
+      if (documentName === "Identity Card") {
+        return "option2";
+      } else if (documentName === "Passport") {
+        return "option3";
+      } else if (documentName === "Driving License") {
+        return "option4";
+      } else {
+        // Handle other cases or return a default value
+        return "option1";
       }
-    } else {
-      console.warn('Please select an image before uploading.');
-    }
-  };
+    };
+  
+    const handleUpload = async () => {
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append('image', selectedFile);
+  
+        try {
+          const response = await fetch('http://localhost:8000/api/upload/', {
+            method: 'POST',
+            body: formData,
+          });
+  
+          if (response.ok) {
+            const result = await response.json();
+            console.log('Upload successful. Result:', result);
+  
+            if (result.api_response.data.ocr && result.api_response.data.documentName) {
+              const ocrData = result.api_response.data.ocr;
+              const documentName = result.api_response.data.documentName;
+              
+              // Map documentName to labels key
+              const labelsKey = mapDocumentNameToLabelsKey(documentName);
+  
+              setOcrData(ocrData);
+              setDocumentName(documentName);
+              setLabels(optionLabels[labelsKey]);
+              console.log("OCR Data:", ocrData);
+              console.log("Document Name:", documentName);
+            }
+          } else {
+            console.error('Error uploading the image. Status:', response.status);
+          }
+        } catch (error) {
+          console.error('Error uploading the image:', error);
+        }
+      } else {
+        console.warn('Please select an image before uploading.');
+      }
+    };
+  
+  
+
+
   const handleClearInputs = () => {
     setOcrData(null); // Clear OCR data
     const initialLabelData = Array(labels.length).fill('');
@@ -182,51 +184,56 @@ function Mid() {
             </button>
           </div>
         </div>
-
+<div className='rest'></div>
         <div className="container">
         <form action="" className="form">
-  <select
-    className="select-option"
-    onChange={(e) => handleOptionChange(e)}
-    value={selectedOption}
-  >
-     <option value="option1">Chose an option</option>
-    <option value="option2">Identity Card</option>
-    <option value="option3">Passport</option>
-    <option value="option4">Driving License</option>
-  </select>
+ 
 
-  {selectedOption !== '' && selectedOption !== 'option1' &&(
-    <>
-      {labels.map((label, index) => {
-        const selectedMapping =
-          selectedOption === 'option2'
-            ? labelToOcrMapping1
-            : selectedOption === 'option3'
-            ? labelToOcrMapping2
-            : labelToOcrMapping3;
+        {documentName && (
+  <>
+   <label className='title'>{documentName}</label>
+    {labels.map((label, index) => {
+      let selectedMapping;
 
-        return (
-          <div key={index} className="form__column">
-            <label htmlFor={label} className="form__label">
-              {label}
-            </label>
-            <input
-              type="text"
-              placeholder=""
-              value={
-                ocrData && selectedMapping[label]
-                  ? ocrData[selectedMapping[label]]
-                  : ''
-              }
-              onChange={(e) => handleLabelDataChange(index, e.target.value)}
-              className="form__input"
-            />
-          </div>
-        );
-      })}
+      switch (documentName) {
+        case 'Identity Card':
+          selectedMapping = labelToOcrMapping1;
+          
+          break;
+        case 'Passport':
+          selectedMapping = labelToOcrMapping2;
+          break;
+        case 'Driving License':
+          selectedMapping = labelToOcrMapping3;
+          break;
+        default:
+          // Handle other document types or set a default mapping
+          selectedMapping = labelToOcrMapping1;
+      }
+       
+      return (
+        <div key={index} className="form__column">
+          
+          <label htmlFor={label} className="form__label">
+            {label}
+          </label>
+          <input
+            type="text"
+            placeholder=""
+            value={
+              ocrData && selectedMapping[label]
+                ? ocrData[selectedMapping[label]]
+                : ''
+            }
+            onChange={(e) => handleLabelDataChange(index, e.target.value)}
+            className="form__input"
+          />
+        </div>
+      );
+    })}
 
-      <button onClick={handleUpload} className="bbutton">
+
+      <button onClick={handleClearInputs} className="bbutton">
         <span>
           <h4>Clear</h4>
         </span>

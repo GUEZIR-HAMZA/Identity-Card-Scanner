@@ -5,11 +5,17 @@
   }
   .mid {
     width: 100vw;
-    height: 100vh;
+    height: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #e9f3fe;
+  }
+  .title{
+    margin-top: 15px;
+    font-size: 30px;
+    color: white;
+    font-weight: 600;
   }
   .parent {
     
@@ -328,8 +334,11 @@
       box-shadow: #0000ff;
     }
   }
-
+.rest{
+  height: 82vh;
+}
   .footer {
+    
     background-color: #000000;
     color: white;
     height: fit-content;
