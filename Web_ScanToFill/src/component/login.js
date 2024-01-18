@@ -77,7 +77,7 @@ const LoginForm = () => {
             {showSignUp && (
               <div className="inputBox">
                 <input type="password" required />
-                <i>Confirm Password</i>
+                <i>Confirm Password </i>
               </div>
             )}
             {showSignUp && (
@@ -90,12 +90,12 @@ const LoginForm = () => {
                     onChange={handlePrivacyChange}
                     required
                   />
-                  J'accepte les termes de la confidentialité générale
+                   I accept the terms of the general privacy policy  
                 </label>
               </div>
             )}
             <div className="links">
-              <a href="#">Forgot Password</a>
+              <a href="#">Forgot Password ?</a>
               <a href="#" onClick={handleSignUpClick}>
                 {showSignUp ? 'Sign In' : 'Sign Up'}
               </a>

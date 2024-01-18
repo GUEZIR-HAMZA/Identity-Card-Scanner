@@ -12,11 +12,11 @@ function App() {
     <Router>
       <Routes>
         <Route
-          path="/a"
+          path="/"
           element={<LoginForm onLogin={() => setIsLoggedIn(true)} isLoggedIn={isLoggedIn} />}
         />
         <Route
-          path="/"
+          path="/main"
           element={
             
               <div>
