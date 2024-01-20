@@ -1,0 +1,32 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - "3306:3306"
+
+  api:
+    image: api
+    container_name: api
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"
+
+  web:
+    image: web
+    container_name: web
+    ports:
+      - "8081:8081"
+    expose:
+      - "8081"
+
+  mobile:
+    image: mobile
+    container_name: mobile
+    ports:
+      - "8082:8082"
+    expose:
+      - "8082"
