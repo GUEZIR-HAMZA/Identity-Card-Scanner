@@ -8,16 +8,9 @@ const ProfileScreen = () => {
   const editProfile = () => {
     navigation.navigate('EditProfile');
   };
-  const listFollowing = () => {
-    const suiviProfil = {
-      // Define the properties you want to pass to 'MaListeDeSuivis'
-      // For example, image, secteur, nom, etc.
-    };
   
-    navigation.navigate('MaListeDeSuivis', { suiviProfil });
-  };
-  const favoris = () => {
-    navigation.navigate('Favoris');
+  const aboutUs = () => {
+    navigation.navigate('About Us');
   };
   const editPswd = () => {
     navigation.navigate('EditMdp');
@@ -36,14 +29,13 @@ const ProfileScreen = () => {
       <View style={styles.contentContainer}>
         {/* Image à gauche */}
         <Image
-          //source={require('../../../assets/deco.jpg')} 
+          source={require('../../../assets/ana2.jpg')} 
           style={styles.profilePhoto}
         />
-        
+
         {/* Données à droite */}
         <View style={styles.dataContainer}>
-          <Text style={styles.profileName}>Celiness Architecture</Text>
-          <Text style={styles.contactPost}>Architecte</Text>
+          <Text style={styles.profileName}>Ines</Text>
           <Text style={styles.addressText}>elmehdiines@gmail.com</Text>
         </View>
       </View>
@@ -51,22 +43,15 @@ const ProfileScreen = () => {
       {/* Bouton pour enregistrer la biographie */}
       <TouchableOpacity onPress={editProfile} style={styles.editProfileButton}>
         <View style={styles.buttonContent}>
-          <AntDesign name="user" size={24}  color="#c28540" />
+          <AntDesign name="user" size={24}  color="#003366" />
           <Text style={styles.editProfileText}>Modifier mon profile</Text>
         </View>
       </TouchableOpacity>
-      {/* Ma liste de sv */}
-      <TouchableOpacity onPress={listFollowing} style={styles.listFollowingArea}>
-        <View style={styles.Content}>
-          <Text style={styles.listFollowingText}>Ma liste de suivie</Text>
-          <MaterialIcons style={styles.icon} name="keyboard-arrow-right" />
-        </View>
-      </TouchableOpacity>
-      <View style={styles.divider}></View>
+
       {/* Favoris */}
-      <TouchableOpacity onPress={favoris} style={styles.listFollowingArea}>
+      <TouchableOpacity onPress={aboutUs} style={styles.listFollowingArea}>
         <View style={styles.Content}>
-          <Text style={styles.listFollowingText}>Favoris</Text>
+          <Text style={styles.listFollowingText}>About Us</Text>
           <MaterialIcons style={styles.icon} name="keyboard-arrow-right" />
         </View>
       </TouchableOpacity>
@@ -122,7 +107,7 @@ const styles = StyleSheet.create({
     marginRight:20,
     borderRadius: 15,
     borderWidth: 1.3,
-    borderColor: '#c28540',
+    borderColor: '#003366',
     borderRadius: 5,
   },
   dataContainer: {
@@ -148,7 +133,7 @@ const styles = StyleSheet.create({
     minHeight: 30,
     minWidth: 345,
     borderWidth: 1,
-    borderColor: '#c28540',
+    borderColor: '#003366',
     borderRadius: 10,
     padding: 15,
     marginTop: 10,
@@ -160,7 +145,7 @@ const styles = StyleSheet.create({
     justifyContent:'center'
   },
   editProfileText: {
-    color: '#c28540',
+    color: '#003366',
     fontSize: 17,
     textAlign: 'center',
     alignItems: 'center',

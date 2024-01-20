@@ -36,11 +36,8 @@ const BottomTabNavigator = () => (
         component={AcceuilPage}
         options={{
           tabBarLabel: 'Accueil', // nom de l'icone 
-          tabBarIcon: ({ focused }) => (
-            <Image
-              //source={require('../../../assets/home.png')}
-              style={{ width: 25, height: 25, tintColor: focused ? '#003366' : '#003366' }}
-            />
+          tabBarIcon: ({ focused, color, size }) => (
+            <FontAwesome name="home" size={size} color={focused ? '#003366' : color} />
           ),
           headerShown: false, // Cacher l'en-tête
         }}
@@ -51,12 +48,10 @@ const BottomTabNavigator = () => (
         name="Profile"
         component={ProfilePage}
         options={({ navigation }) => ({
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({ focused }) => (
-            <Image
-              //source={require('../../../assets/profileAvatar.png')}
-              style={{ width: 25, height: 25, tintColor: focused ? '#003366' : '#003366' }}
-            />
+          tabBarLabel: 'profile',
+          tabBarIcon: ({ focused, color, size }) => (
+            <AntDesign name="user" size={size} color={focused ? '#003366' : color} />
+            
           ),
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.goBack()}>
