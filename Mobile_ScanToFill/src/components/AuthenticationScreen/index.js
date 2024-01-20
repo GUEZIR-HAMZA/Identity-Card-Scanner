@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet,Linking} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
 import { useNavigation } from '@react-navigation/native';
@@ -11,27 +11,30 @@ const AuthenticationScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-  
+    const handleFacebookLogin = () => {
+      Linking.openURL("https://www.facebook.com/login");
+      };
+    const handleGoogleLogin = () => {
+        Linking.openURL("https://accounts.google.com/signin");
+    };
+    const handleAppleLogin = () => {
+        Linking.openURL("https://www.icloud.com/");
+    };
 
     const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);
     };
     const handleLogin = () => {
-      // Vérifier que les champs ne sont pas vides
-      if (email === '' || password === '') {
-        alert("Veuillez entrer votre email et votre mot de passe.");
-        return;
-      }
-  
+      
       // Vérifier que l'email est au bon format
       if (!isValidEmail(email)) {
         alert("Veuillez entrer une adresse email valide.");
         return;
       }
   
-      // Ici on peut appeler appeler une API pour vérifier l'authentification mais je ne sais pas comment le faire 
+      // 
       // Simulons une vérification réussie avec des informations statiques
-      if (email === 'elmehdiines@gmail.com' && password === '1234'||password === 'inasa' ) {
+      if (email === 'elmehdiines@gmail.com' && password === '1234'||password === 'inasaa' ) {
         navigation.navigate('BottomTabNavigator');
          // Ici, on peut rediriger l'utilisateur vers une autre page
     } else {
@@ -42,7 +45,7 @@ const AuthenticationScreen = () => {
     // Fonction pour vérifier le format de l'email
     const isValidEmail = (email) => {
       const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-      return emailPattern.test(email);
+      return emailPattern.test(email); 
     };
     const handleRegister = () => {
       // lorsque le bouton d'inscription est cliqué
@@ -119,13 +122,13 @@ const AuthenticationScreen = () => {
       
       <Text style={{ marginTop: 20, fontSize: 16, color:'#ccc' }}>Se connecter avec</Text>
       <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 8}}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleFacebookLogin}>
           <FontAwesome name="facebook" size={37} style={{ marginRight: 45}} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleGoogleLogin}>
           <FontAwesome name="google" size={37} style={{ marginRight: 45 }} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleAppleLogin}>
           <FontAwesome name="apple" size={37} />
         </TouchableOpacity>
       </View>

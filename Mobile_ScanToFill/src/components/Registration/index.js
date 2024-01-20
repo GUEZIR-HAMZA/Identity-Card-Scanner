@@ -107,40 +107,7 @@ const Registration = () => {
         }} 
       />
 
-      <View style={styles.pickerContainer}>
-        <View style={styles.inputWrapper}>
-          
-          <RNPickerSelect
-            placeholder={{
-              label: 'Genre',
-              value: '',
-            }}
-            items={[
-              { label: 'Homme', value: 'homme' },
-              { label: 'Femme', value: 'femme' },
-            ]}
-            onValueChange={(value) => setGender(value)}
-            value={gender}
-            
-          />
-        </View>
-        <View style={styles.inputWrapper}>
-          
-          <RNPickerSelect
-            placeholder={{
-              label: 'Statut',
-              value: '',
-            }}
-            items={[
-              { label: 'Société', value: 'Société' },
-              { label: 'étudiant', value: 'étudiant' },
-            ]}
-            onValueChange={(value) => setStatus(value)}
-            value={status}
-            
-          />
-        </View>
-      </View>
+      
 
       <TextInput
         placeholder="Email"
@@ -243,7 +210,7 @@ const styles = StyleSheet.create({
     minHeight: 30,
     minWidth: 155,
     //sjustifyContent: 'space-between',
-    marginLeft:6,
+    marginLeft:0,
     marginRight:6,
    
   },
@@ -257,14 +224,19 @@ const styles = StyleSheet.create({
     marginRight:18,
   },
   input: {
+    //flex: 1,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 10,
     padding: 15,
     marginTop: 10,
-    width: '48%', 
+   // width: '100%',
     backgroundColor: 'white',
     minHeight: 30,
+    minWidth: 155,
+    //sjustifyContent: 'space-between',
+    marginLeft:-4,
+    marginRight:6,
   },
   title: {
     fontSize: 27,
